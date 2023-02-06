@@ -15,7 +15,7 @@ class TmdbSpider(scrapy.Spider):
 
     actor_link_extractor = LinkExtractor( 
         allow="https://www.themoviedb\.org/person.+",
-        restrict_css = "ol.people.credits")
+        restrict_css = "ol.people.credits:not(.crew)")
     
     start_urls = ['https://www.themoviedb.org/tv/60059-better-call-saul']
 
@@ -25,10 +25,10 @@ class TmdbSpider(scrapy.Spider):
         yield Request(target.url, callback = self.parse_full_credits)
 
     def parse_full_credits(self, response): # NO MORE THAN 5 LINES
-        # current = response.url.split("/")[-1] # name of the page you're on right now e.g. Penguin
-        credits = response.css("ol.people.credits")[0]
         links = self.actor_link_extractor.extract_links(response)
-        yield {"links": links}
+
+        for link in links:
+            yield Request(link.url, callback = self.parse_actor_page)
         
         # this works, but doesn't get full link
         # credits = response.css("ol.people.credits")[0]
@@ -37,4 +37,10 @@ class TmdbSpider(scrapy.Spider):
         #     target = credit.css("a")[0].attrib['href']
 
     def parse_actor_page(self, response): # NO MORE THAN 15 LINES
+        
+        # actor name: response.css("div.title a::text").get()
+
+        # movies: movie1 = response.css("table.credit_group a.tooltip")
+        # for each movie, movie name: movie1.css("a bdi::text").get()
+
         pass
