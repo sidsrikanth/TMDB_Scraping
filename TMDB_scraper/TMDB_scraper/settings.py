@@ -12,7 +12,7 @@ BOT_NAME = 'TMDB_scraper'
 SPIDER_MODULES = ['TMDB_scraper.spiders']
 NEWSPIDER_MODULE = 'TMDB_scraper.spiders'
 
-CLOSESPIDER_PAGECOUNT = 20 # DELETE
+# CLOSESPIDER_PAGECOUNT = 20
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:53.0) Gecko/20100101 Firefox/53.0'
